@@ -1,4 +1,4 @@
-import { Route, Routes, Outlet, useParams, useOutletContext } from "react-router-dom";
+import { Route, Routes, Outlet, useParams, useOutletContext, useLocation, useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 
 
@@ -15,6 +15,7 @@ function App() {
           <Route path=':id' element={<User />} />
           <Route path='me' element={<UserMe />} />
         </Route>
+        <Route path='/loc' element={<Loc />} />
         <Route path='*' element={<NotFound />} />
       </Routes  >
     </div>
@@ -22,10 +23,13 @@ function App() {
 }
 
 function Home() {
+  const navigate = useNavigate();
+  //console.log(navigate);
   return (
     <main>
       <h2>Home Page</h2>
-    </main>
+      <button onClick={() => { navigate('/users'); }} >Go to the Users</button>
+    </main >
   );
 }
 
@@ -69,6 +73,20 @@ function NotFound() {
   return (
     <main>
       <h2>Not Found Page</h2>
+    </main>
+  );
+}
+function Loc() {
+  //const outp = useLocation();
+  //console.log(outp);
+  const { pathname, search, hash, state } = useLocation();
+  return (
+    <main>
+      <h2>Loc Page</h2>
+      <h3>{pathname}</h3>
+      <h3>{search}</h3>
+      <h3>{hash}</h3>
+      <h3>{JSON.stringify(state)}</h3>
     </main>
   );
 }
